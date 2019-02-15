@@ -12,7 +12,7 @@ for RPM in $RPMLIST; do
     if ! [ -f $FILE ] && ! [ -f $FILE.gz ]; then
        if [ -f /usr/share/fixup-container-notices/$HASH.gz ]; then
           echo "FIXED: $FILE"
-	  mkdir -p $FILE
+	  mkdir -p $(dirname $FILE)
           ln -s /usr/share/fixup-container-notices/$HASH.gz $FILE.gz;
        else
           echo "       $FILE"
