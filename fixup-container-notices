@@ -9,9 +9,14 @@ for RPM in $RPMLIST; do
     FILE=$(echo $FILE_HASH | awk '{ print $1 }')
     HASH=$(echo $FILE_HASH | awk '{ print $2 }')
     
-    if ! [ -f $FILE]; then
-       if [ -f /usr/share/fixup-container-notices/$HASH ]; then
+    if ! [ -f $FILE ] && ! [ -f $FILE.gz ]; then
+       if [ -f /usr/share/fixup-container-notices/$HASH.gz ]; then
+          echo "FIXED: $FILE"
+	  mkdir -p $FILE
           ln -s /usr/share/fixup-container-notices/$HASH.gz $FILE.gz;
+       else
+          echo "       $FILE"
        fi
     fi
 done;
+
