@@ -11,7 +11,7 @@ for RPM in $(RPMLIST); do
     
     if ! [ -f $FILE]; then
        if [ -f /usr/share/fixup-container-notices/$HASH ]; then
-          ln -s /usr/share/fixup-container-notices/$HASH $FILE;
+          ln -s /usr/share/fixup-container-notices/$HASH.gz $FILE.gz;
        fi
     fi
 done;
