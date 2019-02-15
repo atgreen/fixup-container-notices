@@ -1,0 +1,17 @@
+#!/bin/sh
+
+LICENSE_FILE_REGEXP="COPYING\|LICENSE"
+
+RPMLIST=$(rpm -qa)
+
+for RPM in $(RPMLIST); do
+    FILE_HASH=$(rpm -q --qf "[%-36{FILENAMES} %{FILEMD5S}\n]" $RPM | grep $LICENSE_FILE_REGEXP)
+    FILE=$(echo $FILE_HASH | awk '{ print $1 }')
+    HASH=$(echo $FILE_HASH | awk '{ print $2 }')
+    
+    if ! [ -f $FILE]; then
+       if [ -f /usr/share/fixup-container-notices/$HASH ]; then
+          ln -s /usr/share/fixup-container-notices/$HASH $FILE;
+       fi
+    fi
+done;
